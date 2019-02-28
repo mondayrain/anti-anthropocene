@@ -1,0 +1,14 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+    <Marina Smirnova> -- <Designer/General Sustainability Badass>
+    <Larissa Feng> -- <Software Developer> -- <@larissafeng>
+
+# THANKS
+
+    <Mom>
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5, Normalize.css
