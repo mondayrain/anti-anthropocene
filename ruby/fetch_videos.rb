@@ -20,6 +20,8 @@ KEYWORDS = [
   'Food justice',
   'Waste management',
   'Waste reduction',
+  'Low waste movement',
+  'minimalism and no impact',
   'Climate Lab',
   'Recycling',
   'Climate change design',
@@ -51,6 +53,13 @@ KEYWORDS = [
   'Intro to ESG investing',
 ]
 
+BLACKLIST = [
+  '2z5vFxNVmK8',
+  'r4t7rO-nhOw',
+  '-i-Idh56Owk',
+  '-q9K0Hjzk6o',
+]
+
 # Initialize Yt
 #----------------------------------------------
 Yt.configure do |config|
@@ -71,18 +80,25 @@ end
 
 
 # Eliminate any results with time < 2 minutes and more than 40m
+# Also eliminate any results in our blacklist
 #-----------------------------------------------
-puts "\nEliminating videos too long/short"
+puts "\nEliminating videos too long/short or in blacklist"
 results = results.reject do |v|
   duration_in_seconds = v.duration
   minutes = duration_in_seconds / 60
 
-  minutes < 2 || minutes > 40
+  invalidDuration = minutes < 2 || minutes > 40
+  inBlacklist = BLACKLIST.include? v.id
+
+  eliminate = invalidDuration || inBlacklist
+  puts "\nEliminating video: '#{v.title}'"  if eliminate
+  
+  eliminate
 end
 
 # Remove any duplicates
 #-----------------------------------------------
-puts "\nEliminating uplicates"
+puts "\nEliminating duplicates"
 results = results.map(&:id).uniq
 
 # Shuffle the results
