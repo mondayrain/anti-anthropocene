@@ -2,27 +2,32 @@
 
 <html lang="en">
   <head>
-    <title>GreenScreen: Your Daily Inspiration</title>
+    <title>GreenScreen: Your Daily Dose</title>
 
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
   </head>
 
-  <body>
-    <main>
-      <h1>GreenScreen</h1>
-      <h3>your daily dose.</h3>
+  <body class='pa3 bg-light-green white'>
+    <main class='tc'>
+      <h1 class='f1 lh-title b-black'><span class='green'>Green</span>Screen</h1>
+      <h3 class='f3 fw2'>your daily dose.</h3>
 
-      <div id="video-player">
-        Loading...
+      <div class='videoWrapper'>
+        <div id="video-player">
+          Loading...
+        </div>
+      </div>
+
+        <a class="f3 grow no-underline br-pill ba mt3 ph3 pv2 mb2 dib bg-white green" onclick="changeVideo()" href="#0">Next, please!</a>
       </div>
     </main>
 
-    <aside>
+    <aside class='dn d-m'>
       <!-- Explainers here -->
       <details open>
         <summary>What is this?</summary>
@@ -35,8 +40,13 @@
       </details>
     </aside>
 
-    <footer>
-      <p>Made with love by <b>Larissa Feng</b> & <b>Marina Smirnova</b></p>
+    <footer class='f4 tc ma4'>
+      <p>
+        Made with love by
+        <span class='fw2'><a class='link green hover-bg-white pl1 pr1' href='https://larissafeng.me' target='_blank'>Larissa Feng</a></span>
+        & <span class='fw2'><a class='link green hover-bg-white pl1 pr1' href='https://lighterliving.life' target='_blank'>Marina Smirnova</a></span>
+        <span class='light-pink'>&lt3</span>
+      </p>
     </footer>
 
     <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

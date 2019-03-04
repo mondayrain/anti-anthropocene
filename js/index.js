@@ -1,7 +1,7 @@
 "use strict";
 
-const PLAYER_HEIGHT = '390';
-const PLAYER_WIDTH = '640';
+const PLAYER_HEIGHT = getPlayerHeight();
+const PLAYER_WIDTH = getPlayerWidth();
 
 let videoPlayer;
 
@@ -16,17 +16,35 @@ function onYouTubeIframeAPIReady() {
     height: PLAYER_HEIGHT,
     width: PLAYER_WIDTH,
     videoId: getRandomVideo(),
-    events: {
-      'onReady': onPlayerReady,
-    }
+    events: {},
   })
-};
-
-function onPlayerReady(event) {
-  // TODO: Update video title
 };
 
 function getRandomVideo() {
   let videoToPlay = VIDEOS[Math.floor(Math.random() * VIDEOS.length)];
   return videoToPlay;
 };
+
+function changeVideo() {
+  videoPlayer.loadVideoById(getRandomVideo());
+};
+
+function getPlayerWidth() {
+  return Math.max(getWindowWidth()/2.75, 300);
+}
+
+function getPlayerHeight() {
+  return Math.max(getWindowHeight()/2.75, 175);
+}
+
+function getWindowWidth() {
+  return window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+}
+
+function getWindowHeight() {
+  return window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+}
