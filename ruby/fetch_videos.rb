@@ -24,10 +24,9 @@ KEYWORDS = [
   'minimalism and no impact',
   'Climate Lab',
   'Recycling',
-  'Climate change design',
   'Climate change practical solutions',
   'Emissions reduction',
-  'tradesoffs sustainability',
+  'Tradesoffs sustainability',
   'Eco-friendly cities',
   'Environmental urban density',
   'Environmental management talk',
@@ -37,7 +36,6 @@ KEYWORDS = [
   'Sustainable food systems',
   'Holistic sustainability',
   'Sustainable design',
-  'Environmental design',
   'Circular economy news',
   'Environmental issues',
   'Environmental education talk',
@@ -50,7 +48,10 @@ KEYWORDS = [
   'Sustainable mobility',
   'Green spaces',
   'Resource based economies',
-  'Intro to ESG investing',
+  'Passive house',
+  'Biophilic Design',
+  'Renewable energy',
+  'The investment logic for sustainability',
 ]
 
 BLACKLIST = [
@@ -58,6 +59,20 @@ BLACKLIST = [
   'r4t7rO-nhOw',
   '-i-Idh56Owk',
   '-q9K0Hjzk6o',
+  'EnIJn0SS-3U',
+]
+
+RECOMMENDED = [
+  '1Ab9HUmQw44',
+]
+
+CHANNELS = [
+  'UCsaEBhRsI6tmmz12fkSEYdw', # Hot Mess
+  'UCNXvxXpDJXp-mZu3pFMzYHQ', # Our Changing Climate
+]
+
+PLAYLISTS = [
+  'PL8CdHFjBJ1d9xB0kPFlmHSlzEgAFM-9Qs',  # Grist explainers
 ]
 
 # Initialize Yt
@@ -78,6 +93,21 @@ KEYWORDS.each do |keyword|
   results.push(*videos.where(q: keyword, order: 'relevance', in: 'us').first(20))
 end
 
+# Pull all the videos from channels
+# -----------------------------------------------
+CHANNELS.each do |channel_id|
+  puts "\nPulling videos from channel #{channel_id}"
+  channel = Yt::Channel.new id: channel_id
+  channel.videos.each { |v| results << v }
+end
+
+# Pull all the videos from playlists
+# -------------------------------------------------
+PLAYLISTS.each do |playlist_id|
+  puts "\nPulling videos from playlist #{playlist_id}"
+  playlist = Yt::Playlist.new id: playlist_id
+  playlist.playlist_items.each { |item| results << item.video }
+end
 
 # Eliminate any results with time < 2 minutes and more than 40m
 # Also eliminate any results in our blacklist
@@ -101,6 +131,11 @@ end
 puts "\nEliminating duplicates"
 results = results.map(&:id).uniq
 
+# Add in our recommended videos
+# -----------------------------------------------
+puts "\nAdding recommended videos"
+results.push(*RECOMMENDED)
+
 # Shuffle the results
 #-----------------------------------------------
 puts "\nShuffling list"
@@ -114,3 +149,5 @@ File.open("videos.txt", "w") do |file|
 
   results.each { |v| file.puts v}
 end
+
+puts "\nWrote #{results.length} total videos to list"
