@@ -3,7 +3,7 @@
 ###################
 # Generate all eligible video IDs by:
 # 1) Querying YouTube with keywords
-# 2) Taking the top 50 videos per keyword
+# 2) Taking the top 20 videos per keyword
 # 3) Filtering out "blacklisted" videos
 ###################
 
@@ -60,7 +60,7 @@ KEYWORDS = [
   'Renewable energy',
   'The investment logic for sustainability',
   'sustainable IT technology',
-
+  'sustainable packaging',
 ]
 
 # Irrelevant videos
@@ -74,6 +74,7 @@ BLACKLIST = [
   'uHEfRAooih8',
   'a2KqcvD3m7Q',
   'oUWLR8S1_eA',
+  'tF7asIa0SyU',
 ]
 
 RECOMMENDED = [
@@ -95,6 +96,7 @@ PLAYLISTS = [
   'PL6kVAvCBpGR24taZhRDy0SuvbBMzb7Vny',  # Zentouro: Everyday Environmentalism
   'PL6kVAvCBpGR1BowS63FmAlmTdVb2q0HD5',  # Zentouro: Eco Activism and the Environment
   'PLJCnRdvL-3APFuU8osKzeN1d3BOB9Rhng',  # Evan Fraser: Feeding Nine Billion
+  'PLzD0K2OhbVfEF5V2aVX541__SOL3q65kA',  # Fully Charged Electric motorbikes, bikes, and scooters,
 ]
 
 # Initialize Yt
