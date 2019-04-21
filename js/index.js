@@ -5,6 +5,10 @@ const PLAYER_WIDTH = getPlayerWidth();
 
 let videoPlayer;
 
+// Set the "last updated at" string
+let updatedAtElement = document.getElementById('updated-on');
+updatedAtElement.innerHTML = LAST_UPDATE;
+
 // Load YouTube's iFrame API asynchronously
 let tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";

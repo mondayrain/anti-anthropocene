@@ -9,6 +9,13 @@
 
 require 'yt'
 
+VIDEOS_FILE_PATH = '../js/videos.js'.freeze
+VIDEOS_FILE_BLURB = %(
+// This list of videos IDs is generated manually by running 'fetch_videos.rb' every so often.
+// We would love for this to be completely automatic, but Youtube API Quotas are a thing,
+// as well as the fact that private API Keys + GitHub Pages don't go well together =]
+)
+
 DEVELOPER_KEY = ''.freeze;
 
 YOUTUBE_API_SERVICE_NAME = 'youtube'
@@ -52,27 +59,42 @@ KEYWORDS = [
   'Biophilic Design',
   'Renewable energy',
   'The investment logic for sustainability',
+  'sustainable IT technology',
+
 ]
 
+# Irrelevant videos
 BLACKLIST = [
   '2z5vFxNVmK8',
   'r4t7rO-nhOw',
   '-i-Idh56Owk',
   '-q9K0Hjzk6o',
   'EnIJn0SS-3U',
+  'yHXVRv_mwAE',
+  'uHEfRAooih8',
+  'a2KqcvD3m7Q',
+  'oUWLR8S1_eA',
 ]
 
 RECOMMENDED = [
   '1Ab9HUmQw44',
+  'lnnFx5dWAzY',
 ]
 
 CHANNELS = [
   'UCsaEBhRsI6tmmz12fkSEYdw', # Hot Mess
   'UCNXvxXpDJXp-mZu3pFMzYHQ', # Our Changing Climate
+  'UCi6RkdaEqgRVKi3AzidF4ow', # Global Weirding
 ]
 
 PLAYLISTS = [
   'PL8CdHFjBJ1d9xB0kPFlmHSlzEgAFM-9Qs',  # Grist explainers
+  'PLJ8cMiYb3G5fP5oq01TBp9fgh70vDDSMe',  # Vox climate lab
+  'PLeBwUoIvGwcbL_JyJ0c0h9jzCsv2fn9-9',  # Climate Adam: Climate Politics
+  'PLeBwUoIvGwcalE3FhvDXR6yiwP63Wqt10',  # Climate Adam: Clarifying Climate Confusion
+  'PL6kVAvCBpGR24taZhRDy0SuvbBMzb7Vny',  # Zentouro: Everyday Environmentalism
+  'PL6kVAvCBpGR1BowS63FmAlmTdVb2q0HD5',  # Zentouro: Eco Activism and the Environment
+  'PLJCnRdvL-3APFuU8osKzeN1d3BOB9Rhng',  # Evan Fraser: Feeding Nine Billion
 ]
 
 # Initialize Yt
@@ -88,7 +110,7 @@ videos = Yt::Collections::Videos.new
 #-----------------------------------------------
 results = []
 
-KEYWORDS.each do |keyword| 
+KEYWORDS.each do |keyword|
   puts "Searching for keyword #{keyword}"
   results.push(*videos.where(q: keyword, order: 'relevance', in: 'us').first(20))
 end
@@ -122,7 +144,7 @@ results = results.reject do |v|
 
   eliminate = invalidDuration || inBlacklist
   puts "\nEliminating video: '#{v.title}'"  if eliminate
-  
+
   eliminate
 end
 
@@ -143,11 +165,19 @@ results.shuffle
 
 # Write latest results to a file
 #-----------------------------------------------
-puts "\nWriting file"
-File.open("videos.txt", "w") do |file|
-  file.puts "Last update: #{Time.now.strftime("%Y/%m/%d")}\n\n"
+puts "\nWriting .js file"
 
-  results.each { |v| file.puts v}
+File.open(VIDEOS_FILE_PATH, "w") do |file|
+  file.puts(VIDEOS_FILE_BLURB)
+  file.puts()
+
+  file.puts('const VIDEOS = [')
+  results.each { |v| file.puts("  '#{v}',") }
+  file.puts('];')
+  file.puts()
+
+  last_update = Time.now.strftime("%Y/%m/%d")
+  file.puts("const LAST_UPDATE = '#{last_update}';")
 end
 
 puts "\nWrote #{results.length} total videos to list"
