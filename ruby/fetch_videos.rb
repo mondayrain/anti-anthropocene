@@ -75,6 +75,9 @@ BLACKLIST = [
   'a2KqcvD3m7Q',
   'oUWLR8S1_eA',
   'tF7asIa0SyU',
+  '3zDwoEleEmQ',
+  'eNOqqS-uMQs',
+  'qPGYzvO2OtQ',
 ]
 
 RECOMMENDED = [
